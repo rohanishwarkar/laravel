@@ -22,11 +22,11 @@ class VerificationEmail extends Mailable
     {
 		//   echo "ROhannn";
 		  $va = $this->user;
-		  print_r($va);
-		  return $this->view('verifyEmail')
-						  ->with([
-								'name' => $this->user->name,
-								'email_verification_token' => '00000'
-							]);
+		  print_r($va['name']);
+		  return $this->view('verifyEmail');
+						//   ->with([
+						// 		'name' => $this->user->name,
+						// 		'email_verification_token' => '00000'
+						// 	]);
     }
 }
