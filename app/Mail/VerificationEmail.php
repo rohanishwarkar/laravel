@@ -21,8 +21,12 @@ class VerificationEmail extends Mailable
     public function build()
     {
 		//   echo "ROhannn";
-		//   $va = $this->user;
-		//   print_r($va->name);
-        return $this->view('verifyEmail');
+		  $va = $this->user;
+		  print_r($va);
+		  return $this->view('verifyEmail')
+						  ->with([
+								'name' => $this->user->name,
+								'email_verification_token' => '00000'
+							]);
     }
 }
