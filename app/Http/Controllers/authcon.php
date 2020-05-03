@@ -8,7 +8,7 @@ use App\User;
 
 class authcon extends Controller
 {
-    public function register(Request $request){
+    public function registerr(Request $request){
 		 $val_data = $request->validate([
 			 'name'=>'required|max:55',
 			 'email'=>'email|required',
@@ -23,7 +23,7 @@ class authcon extends Controller
 		 return response(['message'=>'Check your mail for verification!']);
 	 }
 
-	 public function login(Request $request){
+	 public function loginn(Request $request){
 		$val_data = $request->validate([
 			'email'=>'email|required',
 			'password'=>'required'

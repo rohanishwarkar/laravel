@@ -17,8 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 // Route::resource('/products','ProductController');
-Route::post('/register','authcon@register');
-Route::post('/login','authcon@login');
+Route::post('/registerr','authcon@registerr');
+Route::post('/loginn','authcon@loginn');
 Route::middleware('auth:api')->get('/products','ProductController@index');
 
 // Email Verification Routes...
