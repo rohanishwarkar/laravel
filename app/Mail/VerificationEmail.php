@@ -20,6 +20,6 @@ class VerificationEmail extends Mailable
 
     public function build()
     {
-        return $this->view('verifyEmail',$this->user);
+        return $this->view('verifyEmail',(array)$this->user);
     }
 }
