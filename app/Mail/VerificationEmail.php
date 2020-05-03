@@ -20,9 +20,9 @@ class VerificationEmail extends Mailable
 
     public function build()
     {
-		  echo "ROhannn";
-		  $va = $this->user;
-		  print_r($va->name);
-        return $this->view('verifyEmail',$va);
+		//   echo "ROhannn";
+		//   $va = $this->user;
+		//   print_r($va->name);
+        return $this->view('verifyEmail');
     }
 }
