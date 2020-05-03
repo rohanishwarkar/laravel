@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\VerificationEmail;
 use App\User;
 
 class authcon extends Controller
@@ -16,8 +17,10 @@ class authcon extends Controller
 
 		 $val_data['password'] = bcrypt($request->password);
 		 $user = User::create($val_data);
-		 $access_token = $user->createToken('authToken')->accessToken;
-		 return response(['user'=>$user,'access'=>$access_token]);
+		 \Mail::to($user->email)->send(new VerificationEmail($user));
+		//  session()->flash('message', 'Please check your email to activate your account');
+		//  $access_token = $user->createToken('authToken')->accessToken;
+		 return response(['message'=>'Check your mail for verification!']);
 	 }
 
 	 public function login(Request $request){
@@ -28,7 +31,11 @@ class authcon extends Controller
 		if(!auth()->attempt($val_data)){
 			return response(['details'=>'Invalid Credentials']);
 		}
-		$token = auth()->user()->createToken('authToken')->accessToken;
-		return response(['user'=>auth()->user(),'token'=>$token]);
+		$user = User::where('email',$request->email)->first();
+		if($user->email_verified_at != null){
+			$token = auth()->user()->createToken('authToken')->accessToken;
+			return response(['user'=>auth()->user(),'token'=>$token]);
+		}
+		return response(['details'=>'Verify Email first!']);
 	 }
 }

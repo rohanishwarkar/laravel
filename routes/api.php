@@ -16,8 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Auth::routes(['verify' => true]);
 // Route::resource('/products','ProductController');
 Route::post('/register','authcon@register');
 Route::post('/login','authcon@login');
 Route::middleware('auth:api')->get('/products','ProductController@index');
+
+// Email Verification Routes...
+Route::get('/verify/{token}', 'VerifyController@VerifyEmail')->name('verify');
