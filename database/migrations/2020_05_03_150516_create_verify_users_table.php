@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTokenToUsers extends Migration
+class CreateVerifyUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddTokenToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            
-				// $table->string('email_verification_token')->nullable();;
+        Schema::create('verify_users', function (Blueprint $table) {
+			$table->integer('user_id');
+			$table->string('token');
+			$table->timestamps();
         });
     }
 
@@ -26,8 +27,6 @@ class AddTokenToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('verify_users');
     }
 }

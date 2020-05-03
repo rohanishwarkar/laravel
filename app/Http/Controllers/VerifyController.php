@@ -11,30 +11,21 @@ class VerifyController extends Controller
 {
 	public function VerifyEmail($token = null)
 	{
-		if($token == null) {
 
-			// session()->flash('message', 'Invalid Login attempt');
-
-			// return redirect()->route('login');
-			return response(['details'=>'Invalid Credentials']);
-
+		$verifyUser = VerifyUser::where('token', $token)->first();
+		if(isset($verifyUser) ){
+			$user = $verifyUser->user;
+			if(!$user->verified) {
+				$verifyUser->user->verified = 1;
+				$verifyUser->user->save();
+				$status = "Your e-mail is verified. You can now login.";
+			} else {
+				$status = "Your e-mail is already verified. You can now login.";
+			}
+		} else {
+			$status = 'Unknown Email';
+			
 		}
-
-		$user = User::where('email_verification_token',$token)->first();
-
-		if($user == null ){
-
-			return response(['details'=>'Invalid Token']);
-
-		}
-
-		$user->update([
-		 'email_verified_at' => Carbon::now(),
-		 'email_verification_token' => ''
-
-		]);
-		
-		return response(['details'=>'Correct Login']);
-
+		return response(['details'=>$status]);
 	}
 }

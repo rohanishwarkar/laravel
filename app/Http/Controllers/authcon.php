@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\VerificationEmail;
 use App\User;
+use App\VerifyUser;
 
 class authcon extends Controller
 {
@@ -16,7 +17,13 @@ class authcon extends Controller
 		 ]);
 
 		 $val_data['password'] = bcrypt($request->password);
+		//  $val_data['email_verification_token'] = sha1(time());
+		//  print_r($val_data);
 		 $user = User::create($val_data);
+		 $verifyUser = VerifyUser::create([
+			'user_id' => $user->id,
+			'token' => sha1(time())
+		 ]);
 		 \Mail::to($user->email)->send(new VerificationEmail($user));
 		//  session()->flash('message', 'Please check your email to activate your account');
 		//  $access_token = $user->createToken('authToken')->accessToken;

@@ -14,7 +14,7 @@ class AddTokenToUsers3 extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-			$table->string('email_verification_token')->nullable()->change();
+			// $table->string('email_verification_token')->nullable()->change();
         });
     }
 
