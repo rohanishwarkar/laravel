@@ -39,7 +39,7 @@ class authcon extends Controller
 			return response(['details'=>'Invalid Credentials']);
 		}
 		$user = User::where('email',$request->email)->first();
-		if($user->email_verified_at != null){
+		if($user->verified == 1){
 			$token = auth()->user()->createToken('authToken')->accessToken;
 			return response(['user'=>auth()->user(),'token'=>$token]);
 		}
